@@ -1,45 +1,31 @@
-# Kaggle Home Credit Default Risk
+# Kaggle Cassava Leaf Disease Classification
 
-Files and codes with my solution to the [Kaggle Home Credit Default Risk competition](https://www.kaggle.com/c/home-credit-default-risk).
+Files and codes with 14th place solution to the [Kaggle Cassava Leaf Disease Classification competition](https://www.kaggle.com/c/cassava-leaf-disease-classification).
 
 
 ## Project summary
 
-In finance, credit scoring refers to the use of statistical models to guide loan approval decisions. This project develops a binary classification model to distinguish defaulters and non-defaulters using supervised machine learning.
+Cassava is one of the key food crops grown by farmers in Africa. Plant diseases are major sources of poor yields. In order to diagnose diseases, farmers require the help of agricultural experts to visually inspect the plants, which is labor-intensive and costly. Deep learning may help to automate this process.
 
-The project works with data from multiple sources, including credit bureau information, application data, performance on previous loans and credit card balance. I perform thorough feature engineering and aggregate data into a single high-dimensional data set. Next, I train an ensemble of LightGBM models that predict the probability of default.
+This project works with a dataset of 21,367 cassava images. The pictures are taken by different farmers on mobile phones and labeled as healthy or one of the 4 common disease types. Main data-related challenges are poor image quality, inconsistent background conditions and label noise.
+
+We develop a stacking ensemble of different CNN and Vision Transformer models that reaches the accuracy of 91.06% on the hidden test set. See the diagram below for the ensemble overview. The coding is done in `PyTorch`. The detailed summary of our solution is provided [this writeup](https://www.kaggle.com/c/cassava-leaf-disease-classification/discussion/220751).
+![cassava](https://i.postimg.cc/d1dcZ6Zv/cassava.png)
 
 
 ## Project structure
 
 The project has the following structure:
-- `codes/`: notebooks with codes for three project stages: data preparation, modeling and ensembling.
-- `data/`: input data. The folder is not uploaded to Github due to size constraints. The raw data can be downloaded [here](https://www.kaggle.com/c/home-credit-default-risk).
-- `output/`: output figures exported from notebooks.
-- `solutions/`: slides with solutions from other competitors.
-- `submissions/`: predictions produced by the trained models.
+- `notebooks/`: notebooks performing the training of base models and ensembling. The notebooks are Colab-friendly.
+- `functions/`: utilites supporting the training notebooks including training, inference and data processing
+- `input/`: input data. The images are not uploaded to Github due to size constraints. The raw data can be downloaded [here](https://www.kaggle.com/c/cassava-leaf-disease-classification).
+- `output/`: model weights and figures exported from notebooks.
+- `pretraining/`: model weights pretrained on external datasets.
 
-There are three notebooks:
-- `code_1_data_prep.ipynb`: data preprocessing and feature engineering. Processes the raw data and exports the aggregated data set.
-- `code_2_modeling.ipynb`: modeling credit risk with a LightGBM model. Takes the aggregated data as input and produces submissions.
-- `code_3_ensemble.ipynb`: ensembling predictions from different models.
+## Modeling pipeline
 
-More details are provided within the notebooks.
+Our solution can be reproduced in the following steps:
+1. Running all training notebooks to obtain weights of 33+2 base models for the ensemble.
+2. Running the ensembling notebook to obtain the final prediction.
 
-
-## Requirments
-
-To run the project codes, you can create a new virtual environment in `conda`:
-
-```
-conda create -n py3 python=3.7
-conda activate py3
-```
-
-and then install the requirements:
-
-```
-conda install -n py3 --yes --file requirements.txt
-pip install lightgbm
-pip install imblearn
-```
+More specific details are provided in the documentation within the notebooks.
