@@ -18,8 +18,8 @@ We develop a stacking ensemble of different CNN and Vision Transformer models im
 
 The project has the following structure:
 - `notebooks/`: notebooks performing the training of base CNN/ViT models and ensembling.
-- `functions/`: utilites supporting the training notebooks including training, inference and data processing
-- `input/`: input data. Images are not uploaded to GitHub due to size constraints and can be downloaded [here](https://www.kaggle.com/c/cassava-leaf-disease-classification).
+- `functions/`: utilites supporting the training notebooks including training, inference and data processing.
+- `data/`: input data. Images are not uploaded to GitHub due to size constraints and can be downloaded [here](https://www.kaggle.com/c/cassava-leaf-disease-classification).
 - `output/`: model weights and diagrams exported from notebooks.
 - `pretraining/`: model weights pretrained on external datasets.
 
