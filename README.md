@@ -24,10 +24,13 @@ The project has the following structure:
 - `pretraining/`: model weights pretrained on external datasets.
 
 
-## Modeling pipeline
+## Working with the repo
 
 Our solution can be reproduced in the following steps:
-1. Running all training notebooks to obtain weights of 33+2 base models for the ensemble.
-2. Running the ensembling notebook to obtain the final prediction.
+1. Downloading competition data and adding it into the `data/` folder.
+2. Running all training notebooks (`pytorch-model`) to obtain weights of 33+2 base models for the ensemble.
+3. Running the ensembling notebook `lightgm-stacking` to obtain the final prediction.
 
-The notebooks are designed to run on Google Colab and require downloading the competition data to the corresponding folders. More details are provided in the documentation within the notebooks.
+All PyTorch training notebooks have the same structure and differ in model/data parameters. Different versions are included to ensure reproducibility. If you only wish to get familiar with our solution, it is enough to inspect one of the PyTorch modeling codes and go through the `functions/` folder to understand the training process.
+
+The notebooks are designed to run on Google Colab. More details are provided in the documentation within the notebooks.
