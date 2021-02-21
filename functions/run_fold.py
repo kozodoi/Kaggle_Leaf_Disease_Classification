@@ -96,11 +96,6 @@ def run_fold(fold, trn_loader, val_loader, df_trn, df_val, CFG, device):
             trn_losses[epoch], val_losses[epoch], val_metrics[epoch],
             (time.time() - epoch_start) / 60), CFG)
         
-        # send to neptune
-        if CFG['tracking']:
-            neptune.send_metric('val_loss{}'.format(fold), val_losses[epoch])
-            neptune.send_metric('val_acc{}'.format(fold),  val_metrics[epoch])
-        
         # export weights and save preds
         if val_metrics[epoch] >= max(val_metrics):
             smart_save(model.state_dict(), CFG['out_path'] + 'weights_fold{}.pth'.format(fold), CFG)
