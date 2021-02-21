@@ -115,6 +115,10 @@ def cutmix_fn(data, target, alpha):
 
 ####### TTA HELPER FUNCTION
 
+'''
+Boorowed from https://github.com/haqishen/SIIM-ISIC-Melanoma-Classification-1st-Place-Solution
+'''
+
 def get_tta_flips(img, i):
 
     if i >= 4:
