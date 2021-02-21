@@ -1,4 +1,4 @@
-# Kaggle: Cassava Leaf Disease Classification Solution
+# Cassava Leaf Disease Classification
 
 Files and codes with the 14th place solution to the [Cassava Leaf Disease Classification Kaggle competition](https://www.kaggle.com/c/cassava-leaf-disease-classification).
 
