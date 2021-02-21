@@ -276,6 +276,10 @@ class CBAM(nn.Module):
 
 ####### GRADCAM MODULES
 
+'''
+Based on https://www.kaggle.com/debarshichanda/gradcam-visualize-your-cnn
+'''
+
 class FeatureExtractor():
     ''' Class for extracting activations and
     registering gradients from targetted intermediate layers '''
