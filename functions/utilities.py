@@ -1,5 +1,10 @@
 ####### UTILITIES
 
+import os
+import numpy as np
+import random
+import torch
+
 # random sequences
 def randomly(seq):
     shuffled = list(seq)

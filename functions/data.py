@@ -1,5 +1,7 @@
 ####### DATASET
 
+from torch.utils.data import Dataset
+
 class ImageData(Dataset):
     
     # initialization
