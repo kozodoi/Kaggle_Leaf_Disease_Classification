@@ -28,6 +28,16 @@ The project has the following structure:
 
 ## Working with the repo
 
+### Environment
+
+To execute codes, you can create a virtual Conda environment from the `environment.yml` file:
+```
+conda env create --name cassava --file environment.yml
+conda activate cassava
+```
+
+### Reproducing solution
+
 Our solution can be reproduced in the following steps:
 1. Downloading competition data and adding it into the `data/` folder.
 2. Running all training notebooks `pytorch-model` to obtain weights of 33+2 base models for the ensemble.
