@@ -1,6 +1,6 @@
 # Cassava Leaf Disease Classification
 
-The top-1% solution to the [Cassava Leaf Disease Classification](https://www.kaggle.com/c/cassava-leaf-disease-classification) Kaggle competition.
+Top-1% solution to the [Cassava Leaf Disease Classification](https://www.kaggle.com/c/cassava-leaf-disease-classification) Kaggle competition on plant image classification.
 
 ![sample](https://i.postimg.cc/jdtWjXyF/cassava-sample.png)
 
@@ -19,8 +19,8 @@ We develop a stacking ensemble with CNNs and Vision Transformers implemented in 
 ## Project structure
 
 The project has the following structure:
-- `functions/`: `.py` scripts with training, inference and data processing functions
-- `notebooks/`: `.ipynb` notebooks performing training of CNN/ViT models and ensembling
+- `codes/`: `.py` scripts with training, inference and data processing functions
+- `notebooks/`: `.ipynb` notebooks for data eploration, training CNN/ViT models and ensembling
 - `data/`: input data (images are not included due to size constraints and can be downloaded [here](https://www.kaggle.com/c/cassava-leaf-disease-classification))
 - `output/`: model configurations, weights and diagrams exported from notebooks
 - `pretraining/`: model configurations and weights pretrained on external datasets
@@ -40,8 +40,8 @@ conda activate cassava
 
 Our solution can be reproduced in the following steps:
 1. Downloading competition data and adding it into the `data/` folder.
-2. Running all training notebooks `pytorch-model` to obtain weights of 33+2 base models for the ensemble.
-3. Running the ensembling notebook `lightgbm-stacking` to obtain the final prediction.
+2. Running training notebooks `pytorch-model` to obtain base models weights.
+3. Running the ensembling notebook `lightgbm-stacking` to get final predictions.
 
 All `pytorch-model` notebooks have the same structure and differ in model/data parameters. Different versions are included to ensure reproducibility. If you only wish to get familiar with our solution, it is enough to inspect one of the PyTorch modeling codes and go through the `functions/` folder to understand the training process. The stacking ensemble reproducing our submission is also provided in this [Kaggle notebook](https://www.kaggle.com/kozodoi/14th-place-solution-stack-them-all).
 
