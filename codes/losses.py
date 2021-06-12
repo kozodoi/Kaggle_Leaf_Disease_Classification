@@ -1,3 +1,8 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+
 ##### CROSSENTROPY WITH LABEL SMOOTHING
 
 class LabelSmoothingCrossEntropy(nn.Module):
@@ -192,7 +197,7 @@ class LabelSmoothingLoss(nn.Module):
 
 class TaylorCrossEntropyLoss(nn.Module):
 
-    def __init__(self, n = 2, ignore_index = -1, reduction = 'mean', smoothing = 0):
+    def __init__(self, CFG, n = 2, ignore_index = -1, reduction = 'mean', smoothing = 0):
         super(TaylorCrossEntropyLoss, self).__init__()
         assert n % 2 == 0
         self.taylor_softmax = TaylorSoftmax(dim=1, n=n)
@@ -209,3 +214,63 @@ class TaylorCrossEntropyLoss(nn.Module):
         else:
             loss = self.lab_smooth(log_probs, labels)
         return loss
+    
+    
+    
+####### LOSS PREP
+
+def get_losses(CFG, device, epoch = None):
+
+    # look up training loss
+    if CFG['step_loss'] and epoch is not None:
+        loss_fn = CFG['step_loss'][epoch]
+        if epoch >= 1:
+            if loss_fn != CFG['step_loss'][epoch - 1]:
+                smart_print('- switching loss to {}...'.format(CFG['step_loss'][epoch]), CFG)
+    else:
+        loss_fn = CFG['loss_fn']
+
+    # define training loss
+    if loss_fn == 'CE':
+        trn_criterion = LabelSmoothingCrossEntropy(smoothing = CFG['smoothing']).to(device)
+
+    elif loss_fn == 'OHEM':
+        trn_criterion = OhemCrossEntropy(top_k     = CFG['ohem'], 
+                                         smoothing = CFG['smoothing']).to(device)
+
+    elif loss_fn == 'SCE':
+        trn_criterion = SymmetricCrossEntropy(alpha       = CFG['sce'][0],
+                                              beta        = CFG['sce'][1],
+                                              num_classes = CFG['num_classes'],
+                                              smoothing   = CFG['smoothing']).to(device)
+
+    elif loss_fn == 'CCE':
+        trn_criterion = ComplementCrossEntropy(gamma       = CFG['cce'],
+                                               num_classes = CFG['num_classes'],
+                                               smoothing   = CFG['smoothing']).to(device)
+
+    elif loss_fn == 'Focal':
+        trn_criterion = FocalLoss(alpha     = CFG['focal'][0],
+                                  gamma     = CFG['focal'][1],
+                                  smoothing = CFG['smoothing']).to(device)
+
+    elif loss_fn == 'FocalCosine':
+        trn_criterion = FocalCosineLoss(alpha     = CFG['focalcosine'][0],
+                                        gamma     = CFG['focalcosine'][1],
+                                        xent      = CFG['focalcosine'][2],
+                                        smoothing = CFG['smoothing']).to(device)
+
+    elif loss_fn == 'Taylor':
+        trn_criterion = TaylorCrossEntropyLoss(CFG       = CFG,
+                                               n         = CFG['taylor'], 
+                                               smoothing = CFG['smoothing']).to(device)
+
+    elif loss_fn == 'BiTempered':
+        trn_criterion = BiTemperedLogisticLoss(t1        = CFG['bitempered'][0], 
+                                               t2        = CFG['bitempered'][1], 
+                                               smoothing = CFG['smoothing'])
+
+    # define validation loss
+    val_criterion = nn.CrossEntropyLoss().to(device)
+
+    return trn_criterion, val_criterion

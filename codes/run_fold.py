@@ -1,6 +1,21 @@
+from utilities import *
+from data import *
+from model import *
+from losses import *
+from train_epoch import *
+from valid_epoch import *
+
+import os
+import time
+
+
+
 ####### WRAPPER FUNCTION
 
-def run_fold(fold, trn_loader, val_loader, df_trn, df_val, CFG, device):
+def run_fold(fold, trn_loader, val_loader, 
+             df, df_2019, df_pl, df_ext, df_no, list_dupl, list_noise,
+             df_trn, df_val, 
+             CFG, device):
 
     ##### PREPARATIONS
     
@@ -28,7 +43,13 @@ def run_fold(fold, trn_loader, val_loader, df_trn, df_val, CFG, device):
 
         # update data loaders if needed
         if (CFG['step_size']) or (CFG['step_p_aug']) or (CFG['flip_prob']):
-            trn_loader, val_loader, df_train, df_valid = get_data(df, fold, CFG, epoch)   
+            trn_loader, val_loader, df_train, df_valid = get_data(df, fold, CFG,
+                                                                  df_2019    = df_2019 if CFG['data_2019'] else None,
+                                                                  df_pl      = df_pl if CFG['data_pl'] else None,
+                                                                  df_ext     = df_ext if CFG['data_ext'] else None,
+                                                                  df_no      = df_no,
+                                                                  list_dupl  = list_dupl if CFG['drop_dupl'] else [],
+                                                                  list_noise = list_noise if CFG['drop_noise'] else [])  
             
         # update freezing for normal training if needed
         if (CFG['warmup_freeze']) and (epoch == CFG['warmup']):

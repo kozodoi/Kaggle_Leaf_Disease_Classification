@@ -1,8 +1,24 @@
+from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
+from torch.utils.data.sampler import RandomSampler, SequentialSampler, WeightedRandomSampler
+from torch.utils.data.distributed import DistributedSampler
+import torch
+
+import cv2
+import numpy as np
+import pandas as pd
+import numpy as np
+
+import os
+import time
+
+from utilities import *
+from augmentations import *
+
+
 ####### DATASET
 
-from torch.utils.data import Dataset
-
-class ImageData(Dataset):
+class LeafData(Dataset):
     
     # initialization
     def __init__(self, 
@@ -21,7 +37,7 @@ class ImageData(Dataset):
     
     # get item  
     def __getitem__(self, idx):
-        
+                
         # import
         path  = os.path.join(self.directory, self.data.iloc[idx]['image_id'])
         image = cv2.imread(path)
@@ -44,7 +60,14 @@ class ImageData(Dataset):
 
 ####### DATA PREP
 
-def get_data(df, fold, CFG, epoch = None):
+def get_data(df, fold, CFG,
+             df_2019    = None,
+             df_no      = None,
+             df_pl      = None,
+             df_ext     = None,
+             epoch      = None,
+             list_dupl  = [],
+             list_noise = []):
 
     ##### EPOCH-BASED PARAMS
 
@@ -131,14 +154,14 @@ def get_data(df, fold, CFG, epoch = None):
     train_augs, test_augs = get_augs(CFG, image_size, p_augment)
 
     # datasets
-    train_dataset = ImageData(data      = df_train, 
-                              directory = CFG['data_path'] + 'train_images/',
-                              transform = train_augs,
-                              labeled   = True)
-    valid_dataset = ImageData(data      = df_valid, 
-                              directory = CFG['data_path'] + 'train_images/',
-                              transform = test_augs,
-                              labeled   = True)
+    train_dataset = LeafData(data      = df_train, 
+                             directory = CFG['data_path'] + 'train_images/',
+                             transform = train_augs,
+                             labeled   = True)
+    valid_dataset = LeafData(data      = df_valid, 
+                             directory = CFG['data_path'] + 'train_images/',
+                             transform = test_augs,
+                             labeled   = True)
     
     
     ##### DATA SAMPLERS
