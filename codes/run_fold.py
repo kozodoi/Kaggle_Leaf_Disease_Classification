@@ -12,12 +12,32 @@ import time
 
 ####### WRAPPER FUNCTION
 
-def run_fold(fold, trn_loader, val_loader, 
-             df, df_2019, df_pl, df_ext, df_no, list_dupl, list_noise,
-             df_trn, df_val, 
-             CFG, device):
+def run_fold(fold, 
+             trn_loader, 
+             val_loader, 
+             df, 
+             df_2019, 
+             df_pl, 
+             df_ext, 
+             df_no, 
+             list_dupl, 
+             list_noise,
+             df_trn, 
+             df_val, 
+             CFG, 
+             device):
+    
+    '''
+    Run training and validation on a single fold
+    '''
 
     ##### PREPARATIONS
+    
+    # tests
+    assert isinstance(CFG,    dict),         'CFG has to be a dict with parameters'
+    assert isinstance(df_trn, pd.DataFrame), 'df_trn has to be a pandas dataframe'
+    assert isinstance(df_val, pd.DataFrame), 'df_val has to be a pandas dataframe'
+    assert isinstance(fold,   int),          'fold has to be an integer'
     
     # reset seed
     seed_everything(CFG['seed'] + fold, CFG)

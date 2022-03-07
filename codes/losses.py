@@ -158,7 +158,7 @@ class FocalCosineLoss(nn.Module):
         elif self.reduction == 'sum':
             focal_loss = torch.mean(focal_loss)
         return cosine_loss + self.xent * focal_loss
-  
+    
     
 ##### TAYLOR LOSS
 
@@ -220,6 +220,13 @@ class TaylorCrossEntropyLoss(nn.Module):
 ####### LOSS PREP
 
 def get_losses(CFG, device, epoch = None):
+    
+    '''
+    Get training and validation loss function
+    '''
+    
+    # tests
+    assert isinstance(CFG, dict), 'CFG has to be a dict with parameters'
 
     # look up training loss
     if CFG['step_loss'] and epoch is not None:

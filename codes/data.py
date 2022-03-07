@@ -20,6 +20,10 @@ from augmentations import *
 
 class LeafData(Dataset):
     
+    '''
+    Image dataset class
+    '''
+    
     # initialization
     def __init__(self, 
                  data, 
@@ -60,7 +64,9 @@ class LeafData(Dataset):
 
 ####### DATA PREP
 
-def get_data(df, fold, CFG,
+def get_data(df, 
+             fold, 
+             CFG,
              df_2019    = None,
              df_no      = None,
              df_pl      = None,
@@ -68,6 +74,17 @@ def get_data(df, fold, CFG,
              epoch      = None,
              list_dupl  = [],
              list_noise = []):
+    
+    '''
+    Get training and validation data and dataloaders
+    '''
+    
+    ##### TESTS
+    
+    assert isinstance(df,   pd.DataFrame), 'df has to be a pandas dataframe'
+    assert isinstance(fold, int),          'fold has to be an integer'
+    assert isinstance(CFG,  dict),         'CFG has to be a dict with parameters'
+
 
     ##### EPOCH-BASED PARAMS
 

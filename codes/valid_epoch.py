@@ -10,7 +10,18 @@ from tqdm import tqdm
 
 ####### INFERENCE
 
-def valid_epoch(loader, model, criterion, CFG, device):
+def valid_epoch(loader, 
+                model, 
+                criterion, 
+                CFG, 
+                device):
+    
+    '''
+    Run validation epoch
+    '''
+    
+    # tests
+    assert isinstance(CFG, dict), 'CFG has to be a dict with parameters'
 
     # switch regime
     model.eval()
@@ -20,7 +31,7 @@ def valid_epoch(loader, model, criterion, CFG, device):
 
     # preds placeholders
     PROBS = []
-       
+    
     # loop through batches
     with torch.no_grad():
         for batch_idx, (inputs, labels) in (tqdm(enumerate(loader), total = len(loader)) if CFG['device'] != 'TPU' \

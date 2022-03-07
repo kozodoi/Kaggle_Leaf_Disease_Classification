@@ -12,6 +12,14 @@ from warmup_scheduler import GradualWarmupScheduler
 ####### MODEL ARCHITECTURE
 
 def init_model(CFG, device, path = None):
+    
+    '''
+    Instantiate the model
+    '''
+    
+    # tests
+    assert isinstance(CFG, dict), 'CFG has to be a dict with parameters'
+
 
     ##### CONVOLUTIONAL PART
 
