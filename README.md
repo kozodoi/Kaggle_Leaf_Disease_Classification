@@ -4,6 +4,10 @@ Top-1% solution to the [Cassava Leaf Disease Classification](https://www.kaggle.
 
 ![sample](https://i.postimg.cc/jdtWjXyF/cassava-sample.png)
 
+- [Summary](#summary)
+- [Repo structure](#repo-structure)
+- [Working with the repo](#working-with-the-repo)
+
 
 ## Summary
 
@@ -16,7 +20,7 @@ We develop a stacking ensemble with CNNs and Vision Transformers implemented in 
 ![cassava](https://i.postimg.cc/d1dcZ6Zv/cassava.png)
 
 
-## Project structure
+## Repo structure
 
 The project has the following structure:
 - `codes/`: `.py` scripts with training, inference and image processing functions
